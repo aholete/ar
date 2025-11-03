@@ -66,13 +66,14 @@
       border-radius: 8px;
       cursor: pointer;
       display: none;
+      z-index: 9999;
     }
   </style>
 </head>
 <body>
   <div id="container">
     <h1>ARマーカー作成アプリ</h1>
-    <p>画像をアップロードすると、その画像をARマーカーに重ねて表示します。</p>
+    <p>画像をアップロードすると、その画像をARマーカー上に表示します。</p>
 
     <input type="file" id="imageInput" accept="image/*">
     <button id="generateBtn">ARマーカーを生成</button>
@@ -80,7 +81,6 @@
   </div>
 
   <button id="closeBtn">閉じる</button>
-
   <div id="arView"></div>
 
   <script>
@@ -98,13 +98,19 @@
       closeBtn.style.display = 'block';
 
       arView.innerHTML = `
-        <a-scene embedded arjs>
+        <a-scene
+          embedded
+          vr-mode-ui="enabled: false"
+          arjs="sourceType: webcam; facingMode: environment; debugUIEnabled: false;"
+        >
           <a-marker preset="hiro">
             <a-image src="${imageURL}" width="2" height="2"></a-image>
           </a-marker>
           <a-entity camera></a-entity>
         </a-scene>
       `;
+
+      console.log("✅ ARシーン生成完了:", imageURL);
     }
 
     // 閉じるボタンで初期画面へ戻す
@@ -132,6 +138,9 @@
       const sampleURL = "https://upload.wikimedia.org/wikipedia/commons/3/3f/ARjs_marker_HIRO.jpg";
       showARScene(sampleURL);
     });
+
+    // デバッグログ
+    console.log("📸 カメラ初期化を待機中...");
   </script>
 </body>
 </html>
