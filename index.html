@@ -179,7 +179,7 @@ logoutBtn.addEventListener("click", async ()=>{
 uploadBtn.addEventListener("click", async ()=>{
   const user = auth.currentUser;
   if(!user || !user.emailVerified){
-    status.textContent = "ログインしてメール認証を完了してください";
+    status.textContent = "メール認証を完了してください";
     return;
   }
   const file = fileInput.files[0];
